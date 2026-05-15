@@ -20,7 +20,11 @@ const app = express();
 // Middleware
 app.use(helmet());
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: [
+        'http://localhost:3000', 
+        'http://localhost:3001',
+        process.env.FRONTEND_URL // Will accept the Vercel URL when you add FRONTEND_URL to Render!
+    ].filter(Boolean),
     credentials: true
 }));
 app.use(morgan('dev'));
@@ -41,6 +45,13 @@ app.use('/api/students', studentRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/grades', gradeRoutes);
 app.use('/api/users', userRoutes);
+
+// Root endpoint welcome message
+app.get('/', (req, res) => {
+    res.status(200).json({ 
+        message: 'Welcome to the Student Management API! Server is running.' 
+    });
+});
 
 // Health check
 app.get('/health', (req, res) => {
