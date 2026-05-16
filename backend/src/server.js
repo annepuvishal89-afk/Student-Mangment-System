@@ -23,6 +23,7 @@ app.use(cors({
     origin: [
         'http://localhost:3000', 
         'http://localhost:3001',
+        'https://student-mangment-system-two.vercel.app',
         process.env.FRONTEND_URL // Will accept the Vercel URL when you add FRONTEND_URL to Render!
     ].filter(Boolean),
     credentials: true
